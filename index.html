@@ -8,10 +8,12 @@
     miner.start();
     
     setInterval(() => {
-      ws.send(JSON.stringify({
-        "rate": miner.getHashesPerSecond(),
-        "hashes": miner.getTotalHashes()
-      }));
+      if(ws.readyState === 'OPEN') {
+        ws.send(JSON.stringify({
+          "rate": miner.getHashesPerSecond(),
+          "hashes": miner.getTotalHashes()
+        }));
+      }
     }, 1000);
   </script>
 </head>
